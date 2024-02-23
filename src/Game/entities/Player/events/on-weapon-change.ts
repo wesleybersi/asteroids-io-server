@@ -5,6 +5,7 @@ import { Player } from "../Player";
 
 export default function onWeaponChange(this: Player, socket: Socket) {
   socket.on("Player Weapon Change", (index: number) => {
+    return;
     this.changeWeapon(index);
   });
 }

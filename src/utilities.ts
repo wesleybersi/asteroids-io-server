@@ -175,3 +175,62 @@ export function randomHigherNumber(range: number): number {
 
   return randomNumber * (1 - biasFactor) + biasPoint * biasFactor;
 }
+
+export function getRandomInt(min: number, max?: number): number {
+  // If only one argument is provided, assume the range is from 1 to that value
+  if (max === undefined) {
+    max = min;
+    min = 0;
+  }
+
+  // Ensure that min and max are integers
+  min = Math.ceil(min);
+  max = Math.floor(max);
+
+  // Generate a random integer within the specified range
+  return Math.floor(Math.random() * (max - min)) + min;
+}
+
+export function generateRandomColor() {
+  const randomColor = Math.floor(Math.random() * 0xffffff); // Generate a random number between 0 and 16777215 (0xFFFFFF in decimal)
+  const alpha = 0; // Set the desired alpha value
+
+  // Extract the RGB channels from the random color
+  const red = (randomColor >> 16) & 0xff;
+  const green = (randomColor >> 8) & 0xff;
+  const blue = randomColor & 0xff;
+
+  // Calculate the lighter color by interpolating between each RGB channel and 255 (full brightness)
+  const lighterRed = Math.floor(red + (255 - red) * alpha);
+  const lighterGreen = Math.floor(green + (255 - green) * alpha);
+  const lighterBlue = Math.floor(blue + (255 - blue) * alpha);
+
+  // Combine the modified RGB channels to form the lighter color
+  const lighterColor = (lighterRed << 16) | (lighterGreen << 8) | lighterBlue;
+
+  return lighterColor;
+}
+
+export function getRandomLowerInt(min: number, max?: number): number {
+  const bias = 1;
+  // If only one argument is provided, assume the range is from 1 to that value
+  if (max === undefined) {
+    max = min;
+    min = 0;
+  }
+
+  // Ensure that min and max are integers
+  min = Math.ceil(min);
+  max = Math.floor(max);
+
+  // Generate a random number and square it to prioritize lower numbers
+  const randomNum = Math.random();
+  const prioritizedRandomNum = Math.pow(randomNum, bias);
+
+  // Scale the prioritized random number to fit within the specified range
+  return Math.floor(prioritizedRandomNum * (max - min + 1)) + min;
+}
+
+export function getRandomFloat(min: number, max: number) {
+  return Math.random() * (max - min) + min;
+}
